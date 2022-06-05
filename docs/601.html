@@ -1458,8 +1458,8 @@ async function refreshFarm()
 		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
 		const tv = await the2.balanceOf(f_1_add).then(r => {return(r)});
 
-		$("farm_3_i_apr").innerHTML=await thecon.apr();
-		$("farm_3_i_tvl").innerHTML="$" + await thecon.tvl();
+		$("farm_3_i_apr").innerHTML=await theCon.apr();
+		$("farm_3_i_tvl").innerHTML="$" + await theCon.tvl();
 
 
 	}
@@ -1471,8 +1471,8 @@ async function DrefreshFarm()
 	{
 		theCon = new ethers.Contract(f_1_add, farabi, provider);
 
-		$("farm_3_i_apr").innerHTML=await thecon.apr();
-		$("farm_3_i_tvl").innerHTML="$" + await thecon.tvl();
+		$("farm_3_i_apr").innerHTML=await theCon.apr();
+		$("farm_3_i_tvl").innerHTML="$" + await theCon.tvl();
 
 		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
