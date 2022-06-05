@@ -1463,7 +1463,7 @@ function farm_1_f_approve()
 	{
 		var conAdd = pairadd;
 		theCon = new ethers.Contract(pairadd, abbrove, signer);
-		theCon.approve(f_1_add,"999999999999999999999999999999").then((e, r) => {console.log(r)}).then((c)=>{console.log(c);gs();});
+		theCon.approve(f_1_add,"999999999999999999999999999999").then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
 	}
 	catch(e){$("er").innerHTML=e;}
 }
@@ -1474,7 +1474,7 @@ function farm_1_f_chappro()
 		var conAdd = pairadd;
 		theCon = new ethers.Contract(conAdd, abbrove, provider);
 		theCon.allowance(window.ethereum.selectedAddress,f_1_add)
-		.then((e, r) =>
+		.then(r =>
 			{
 				console.log(r);
 				if(Number(r)>0)
@@ -1504,7 +1504,7 @@ function farm_1_f_deposit()
 		var conAdd = f_1_add;
 		theCon = new ethers.Contract(conAdd, farabi, signer);
 		m=($("farm_1_input_deposit").value);m*=1e18;m-=m%1;m=m.toLocaleString("fullwide",{useGrouping:false})
-		theCon.stake(m).then((e, r) => {console.log(r)}).then((c)=>{console.log(c);gs();});
+		theCon.stake(m).then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
 	}
 	catch(e){console.log(e)}
 }
@@ -1515,7 +1515,7 @@ function farm_1_f_claim()
 	{
 		var conAdd = f_1_add;
 		theCon = new ethers.Contract(conAdd, farabi, signer);
-		theCon.getReward().then((e, r) => {console.log(r)}).then((c)=>{console.log(c);gs();});
+		theCon.getReward().then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
 	}
 	catch(e){console.log(e)}
 }
@@ -1527,7 +1527,7 @@ function farm_1_f_withdraw()
 		var conAdd = f_1_add;
 		theCon = new ethers.Contract(conAdd, farabi, signer);
 		m=($("farm_1_input_withdraw").value);m*=1e18;m-=m%1;m=m.toLocaleString("fullwide",{useGrouping:false})
-		theCon.withdraw(m).then((e, r) => {console.log(r)}).then((c)=>{console.log(c);gs();});
+		theCon.withdraw(m).then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
 	}
 	catch(e){console.log(e)}
 }
@@ -1538,7 +1538,7 @@ function farm_1_f_exit()
 	{
 		var conAdd = f_1_add;
 		theCon = new ethers.Contract(conAdd, farabi, signer);
-		theCon.exit().then((e, r) => {console.log(r)}).then((c)=>{console.log(c);gs();});
+		theCon.exit().then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
 	}
 	catch(e){console.log(e)}
 }
@@ -1550,23 +1550,23 @@ async function refreshFarm()
 		farm_1_f_chappro();
 
 		theCon = new ethers.Contract(f_1_add, farabi, provider);
-		theCon.earned(window.ethereum.selectedAddress).then((e, r) =>
+		theCon.earned(window.ethereum.selectedAddress).then(r =>
 		{$("farm_1_s_claim").value=Number(r)/1e9; //REWARD DECIMALS
 		$("farm_1_s_claim_e").value="Earned: "+(Number(r)/1e9); //REWARD DECIMALS
 		$("farm_3_i_re").innerHTML=(Number(r)/1e9);});//REWARD DECIMALS
-		theCon.balanceOf(window.ethereum.selectedAddress).then((e, r) =>
+		theCon.balanceOf(window.ethereum.selectedAddress).then(r =>
 		{$("farm_1_s_withdraw").innerHTML=Number(r)/1e18;
 		$("farm_3_i_ys").innerHTML=(Number(r)/1e18);
 		$("farm_1_s_claim_s").value="Staked: "+(Number(r)/1e18)
 		if(Number(r)>0)
-			{theCon.tdep(window.ethereum.selectedAddress).then((e, r) =>
+			{theCon.tdep(window.ethereum.selectedAddress).then(r =>
 				{$("farm_3_i_ystl").innerHTML= (new Date(Number(r)*1000+86400000*7)).toLocaleString()});
 			}
 		});
 
 		the2 = new ethers.Contract(pairadd, ab1, provider);
-		the2.balanceOf(window.ethereum.selectedAddress).then((e, r) => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
-		const tv = await the2.balanceOf(f_1_add).then((e, r) => {return(r)});
+		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
+		const tv = await the2.balanceOf(f_1_add).then(r => {return(r)});
 
 		$("farm_3_i_apr").innerHTML=await thecon.apr();
 		$("farm_3_i_tvl").innerHTML="$" + await thecon.tvl();
@@ -1584,7 +1584,7 @@ async function DrefreshFarm()
 		$("farm_3_i_apr").innerHTML=await thecon.apr();
 		$("farm_3_i_tvl").innerHTML="$" + await thecon.tvl();
 
-		theCon.periodFinish().then((e, r) => {$("pf").innerHTML=new Date(Number(r) * 1000)});
+		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
 	catch(e){console.log(e);}
 }
