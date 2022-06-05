@@ -1442,9 +1442,9 @@ async function refreshFarm()
 		theCon = new ethers.Contract(f_1_add, farabi, provider);
 		theCon.earned(window.ethereum.selectedAddress)
 		.then(r =>{
-			$("farm_1_s_claim").value=Number(r)/1e9; //REWARD DECIMALS
-			$("farm_1_s_claim_e").value="Earned: "+(Number(r)/1e9); //REWARD DECIMALS
-			$("farm_3_i_re").innerHTML=(Number(r)/1e9);
+			$("farm_1_s_claim").value=Number(r)/1e18; //REWARD DECIMALS
+			$("farm_1_s_claim_e").value="Earned: "+(Number(r)/1e18); //REWARD DECIMALS
+			$("farm_3_i_re").innerHTML=(Number(r)/1e18);
 		});//REWARD DECIMALS
 		theCon.balanceOf(window.ethereum.selectedAddress)
 		.then(r => {
