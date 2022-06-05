@@ -549,7 +549,7 @@ async function basetrip()
 		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
 		provider = new ethers.providers.Web3Provider(window.ethereum)
 		signer = provider.getSigner();
-		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);cw();}
+		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);cw();arf()}
 	}
 	else //if(Number(window.ethereum.chainId)==CHAINID)
 	{
@@ -561,7 +561,7 @@ async function basetrip()
 	}
 	if(Number(window.ethereum.chainId) != null &&(window.ethereum.chainId!=CHAINID))
 	{
-		window.ethereum.request({
+		await window.ethereum.request({
     	method: "wallet_addEthereumChain",
     	params: [{
         	chainId: "62621",
@@ -575,10 +575,10 @@ async function basetrip()
         	blockExplorerUrls: ["https://mtvscout.com"]
     		}]
 		});
+		basetrip()
 	}
 	DrefreshFarm()
 	pantvl()
-	arf()
 }
 async function pantvl()
 {
