@@ -113,7 +113,19 @@ html{background:radial-gradient(circle at bottom, #125, #122, #100);background-a
 <div align="center">
 <h2 align="center">LITE Farmlands # 601</h2>
 Stake to earn passive rewards!<br>
-<button style="font-size: 1.5em" id="cw" onclick="cw()">Connect Wallet</button><br><span id="cw_m"></span><br><br>
+<div id="connect">
+	Please connect your web3 wallet.
+	<br><br>
+	<button onclick="cw()" id="btn-connect">Connect</button>
+</div>
+	<br>
+	<span id="cw_m"></span><br>
+<div id="switch">
+	A web3 wallet is now connected.
+	<button onclick="cw()" id="btn-switch">Switch?</button>
+	<br>
+	<span id="cw"></span>
+</div>
 <div id="fdet"  style="">
 <span>Stakes:</span><span></span><span>vaxLP-DIRT/MTV</span>
 <span>Rewards:</span><span></span><span>DIRT</span>
