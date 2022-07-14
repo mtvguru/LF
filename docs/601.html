@@ -111,8 +111,8 @@ thead td{font-family: bold}
 table{ border: 1px dashed white;border-radius: 20px;padding: 10px;}
 thead{}
 td{text-align: center}
-tr td:nth-child(3){text-align: left}
-tbody tr td:nth-child(2){border-radius: 20px;padding: 0 8px}
+tr td:nth-child(4){text-align: left}
+tbody tr td:nth-child(2){border-radius: 20px;padding: 0 8px;text-shadow:none}
 .elgr td:nth-child(2){background: aqua;color:navy;}
 .elwd td:nth-child(2){background: red;}
 .elst td:nth-child(2){background: #0f0;color:navy;}
@@ -486,8 +486,8 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 			<tr>
 				<td>TimeStamp</td>
 				<td>Action</td>
-				<td>Amount</td>
 				<td>Currency</td>
+				<td>Amount</td>
 				<td>Explore Txn.</td>
 			</tr>
 		</thead>
@@ -1555,8 +1555,8 @@ async function guh() {
 				<tr class="elgr">
 					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
 					<td>Claim Reward</td>
-					<td>${Number(L[i].data)/10**decEARN}</td>
 					<td>DIRT</td>
+					<td>${Number(L[i].data)/10**decEARN}</td>
 					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
 				</tr>
 			`
@@ -1568,8 +1568,8 @@ async function guh() {
 				<tr class="elwd">
 					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
 					<td>Withdrawal</td>
-					<td>${Number(L[i].data)/10**DECIMAL}</td>
 					<td>vaxLP</td>
+					<td>${Number(L[i].data)/10**DECIMAL}</td>
 					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
 				</tr>
 			`
@@ -1579,8 +1579,8 @@ async function guh() {
 				<tr class="elst">
 					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
 					<td>New Deposit</td>
-					<td>${Number(L[i].data)/10**DECIMAL}</td>
 					<td>vaxLP</td>
+					<td>${Number(L[i].data)/10**DECIMAL}</td>
 					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
 				</tr>
 			`
