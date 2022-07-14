@@ -1549,7 +1549,7 @@ async function guh() {
 
 	L = await provider.getLogs({address:f_1_add,topics:[[EGR,EWD,EST],"0x000000000000000000000000"+window.ethereum.selectedAddress.substr(2)],toBlock:"latest",fromBlock:GENESIS});
 
-	for(i=0;i< L.length;i++) {
+	for(i=L.length-1;i>=0;i--) {
 		if(L[i].topics[0]==EGR) {
 			$("farmhist").innerHTML += `
 				<tr class="elgr">
