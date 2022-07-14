@@ -468,11 +468,12 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 	<h2>Farming History</h2>
 	<div style="
 		border: 1px dashed white;
+		border-radius:20px;
 		margin: auto;
 		max-width: max-content;
 		padding: 20px;
 	">
-		<h3>Total Earnings</h3>
+		<span style="font-size;font-size: 1.3em;font-family: bold;">Total Earnings</span><br>
 		<span style="font-size:1.25em" id="totearn">0</span> DIRT
 	</div>
 	<br><br>
@@ -1537,6 +1538,8 @@ async function DrefreshFarm()
 }
 
 async function guh() {
+	theCon = new ethers.Contract(f_1_add, farabi, provider);
+	theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	if(window.ethereum.selectedAddress == null){$("farmhist").innerHTML="Wallet Not Connected!";return}
 	$("farmhist").innerHTML="";
 	totearn=0;
