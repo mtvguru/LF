@@ -105,6 +105,18 @@ html{background-image:url('img/bg-dirt.png');/*:#020611*/;color:#e3e9f2;font-fam
 *{
 scroll-behavior: smooth !important;
 }
+
+
+thead td{font-family: bold}
+table{ border: 1px dashed white;border-radius: 20px;padding: 10px;}
+thead{}
+td{text-align: center}
+tr td:nth-child(3){text-align: left}
+tbody tr td:nth-child(2){border-radius: 20px;padding: 0 8px}
+.elgr td:nth-child(2){background: aqua;color:navy;}
+.elwd td:nth-child(2){background: red;}
+.elst td:nth-child(2){background: #0f0;color:navy;}
+td a{text-decoration: 2px underline dotted #f0f}
 </style>
 </head>
 <div class="topbar">
@@ -449,10 +461,38 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 <br>
 <br>
 
+<hr class="hhr">
+<div style="overflow:auto" align="center">
+	<div align="center">Dry Date<br><i id="pf">?</i></div>
+	<br><br>
+	<h2>Farming History</h2>
+	<div style="border: 1px dashed white;margin:auto">
+		<h3>Total Earnings</h3>
+		<span style="font-size:1.25em" id="totearn">0</span> DIRT
+	</div>
+	<br><br>
+	<h3>Past Interactions</h3>
+	<br>
+	<button onclick="guh()">Refresh?</button>
+	<br><br>
+	<table>
+		<thead>
+			<tr>
+				<td>TimeStamp</td>
+				<td>Action</td>
+				<td>Amount</td>
+				<td>Currency</td>
+				<td>Explore Txn.</td>
+			</tr>
+		</thead>
+		<tbody id="farmhist">
+		</tbody>
+	</table>
+
+</div>
+
 
 <div align="center" id="lfs">
-<br><br>
-<div align="center">Dry Date<br><i id="pf">?</i></div>
 <br><br>
 <div id="faq">
 <h3>Frequently Asked Questions</h3>
@@ -524,6 +564,9 @@ Anyone can request a farm for free. MTV.guru merely provides a platform to host 
 
 <script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
 <script>
+GENESIS = 9892919;
+TIME_B0	= 1627724429;
+BLOCK_0 = 1000000;
 f_1_add = "0x3e4b0acF99DEB7b29e963883eb1a74edC3048310";
 pairadd = "0xF1C8dc0cEA54d40359D5F84dbf323A869230d475";
 tearned	= "0x2Eb19Db032dC60039d35E36918d33197D9F7D7b9";
@@ -532,6 +575,7 @@ CHAINID = 62621;
 DECIMAL = 18;
 decEARN = 18;
 EXPLORE = "https://mtvscout.com/address/";
+EXPLORT = "https://mtvscout.com/tx/";
 tsca = "0xe345A50C33e5c9D0284D6fF0b891c4Fc99a9C117";
 function $(_) {return document.getElementById(_);}
 let provider= {};
@@ -555,7 +599,7 @@ async function basetrip()
 		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
 		provider = new ethers.providers.Web3Provider(window.ethereum)
 		signer = provider.getSigner();
-		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();refreshFarm();cw();arf()}
+		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();refreshFarm();cw();arf();guh()}
 	}
 	else //if(Number(window.ethereum.chainId)==CHAINID)
 	{
@@ -1485,6 +1529,56 @@ async function DrefreshFarm()
 		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
 	catch(e){console.log(e);}
+}
+
+async function guh() {
+	if(window.ethereum.selectedAddress == null){$("farmhist").innerHTML="Wallet Not Connected!";return}
+	$("farmhist").innerHTML="";
+	totearn=0;
+	EGR="0xe2403640ba68fed3a2f88b7557551d1993f84b99bb10ff833f0cf8db0c5e0486";
+	EWD="0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5";
+	EST="0x9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d";
+
+	L = await provider.getLogs({address:f_1_add,topics:[[EGR,EWD,EST],"0x000000000000000000000000"+window.ethereum.selectedAddress.substr(2)],toBlock:"latest",fromBlock:GENESIS});
+
+	for(i=0;i< L.length;i++) {
+		if(L[i].topics[0]==EGR) {
+			$("farmhist").innerHTML += `
+				<tr class="elgr">
+					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
+					<td>Claim Reward</td>
+					<td>${Number(L[i].data)/10**decEARN}</td>
+					<td>DIRT</td>
+					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
+				</tr>
+			`
+			totearn+=Number(L[i].data)/10**decEARN
+			$("totearn").innerHTML = totearn;
+		}
+		if(L[i].topics[0]==EWD) {
+			$("farmhist").innerHTML += `
+				<tr class="elwd">
+					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
+					<td>Withdrawal</td>
+					<td>${Number(L[i].data)/10**DECIMAL}</td>
+					<td>vaxLP</td>
+					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
+				</tr>
+			`
+		}
+		if(L[i].topics[0]==EST) {
+			$("farmhist").innerHTML += `
+				<tr class="elst">
+					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
+					<td>New Deposit</td>
+					<td>${Number(L[i].data)/10**DECIMAL}</td>
+					<td>vaxLP</td>
+					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
+				</tr>
+			`
+		}
+	}
+
 }
 
 aapd=0;
