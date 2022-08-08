@@ -478,7 +478,6 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 	</div>
 	<br><br>
 	<h3>Past Interactions</h3>
-	<br>
 	<button onclick="guh()">Refresh?</button>
 	<br><br>
 	<table>
@@ -1504,12 +1503,12 @@ async function refreshFarm()
 		.then(r =>{
 			$("farm_1_s_claim").value=Number(r)/1e18; //REWARD DECIMALS
 			$("farm_1_s_claim_e").value="Earned: "+(Number(r)/1e18); //REWARD DECIMALS
-			$("farm_3_i_re").innerHTML=(Number(r)/1e18);
+			$("farm_3_i_re").innerHTML=(Number(r)/1e18).toFixed(6);
 		});//REWARD DECIMALS
 		theCon.balanceOf(window.ethereum.selectedAddress)
 		.then(r => {
 			$("farm_1_s_withdraw").innerHTML=Number(r)/1e18;
-			$("farm_3_i_ys").innerHTML=(Number(r)/1e18);
+			$("farm_3_i_ys").innerHTML=(Number(r)/1e18).toFixed(6);
 			$("farm_1_s_claim_s").value="Staked: "+(Number(r)/1e18)
 		});
 
@@ -1517,8 +1516,8 @@ async function refreshFarm()
 		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
 		const tv = await the2.balanceOf(f_1_add).then(r => {return(r)});
 
-		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18) +"%"//.toLocaleString();
-		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18)//.toLocaleString();
+		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%"//;
+		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18).toLocaleString();//
 
 	}
 	catch(e){console.log(e);}
@@ -1529,8 +1528,8 @@ async function DrefreshFarm()
 	{
 		theCon = new ethers.Contract(f_1_add, farabi, provider);
 
-		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18) +"%"//.toLocaleString();
-		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18)//.toLocaleString();
+		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%"//;
+		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18).toLocaleString();//
 
 		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
