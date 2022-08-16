@@ -421,6 +421,7 @@ td a{text-decoration: 2px underline dotted #f0f}
 			<input class="farm_i farm_input_approve" value="Not Approved" disabled="true" id="farm_1_approved"><br>
 			<button class="farmcontrols farm_b farm_approve" onclick="farm_1_f_approve()" id="farm_1_approval">Approve</button><br><br>
 		</div>
+			<!-- ORIGINAL UNLOCKED
 			<div id="farm_1_after" style="display:none">
 
 				Balance: <span class="farm_s farm_s_deposit" id="farm_1_s_deposit" onclick="$('farm_1_input_deposit').value=this.innerHTML">0</span> PROX<br>
@@ -437,6 +438,32 @@ td a{text-decoration: 2px underline dotted #f0f}
 				<input class="farm_i farm_input_claim_e" value="Earnings Unknown" disabled="true" id="farm_1_s_claim_e"> PROX<br>
 				<input class="farm_i farm_input_claim_s" value="Stake Unknown" disabled="true" id="farm_1_s_claim_s"> PROX<br>
 				<button class="farmcontrols farm_b farm_exit" onclick="farm_1_f_exit()">Claim & Exit</button><br>
+
+			</div>-->
+			<div id="farm_1_after" style="display:none">
+
+				Deposits & Withdrawals Locked <br>Till 14th Feb. 2023<br><br>
+
+				Account Balance<br>
+				<span class="farm_s farm_s_deposit" id="farm_1_s_deposit" onclick="$('farm_1_input_deposit').value=this.innerHTML">0</span> PROX<br>
+				<input style="display:none" class="farmcontrols farm_i farm_input_deposit" value="" placeholder="Deposit Amount" id="farm_1_input_deposit">
+				<button style="display:none" class="farmcontrols farm_b farm_deposit" onclick="farm_1_f_deposit()">Deposit PROX</button><br><br>
+
+				Staked Balance<br>
+				<span class="farm_s farm_s_deposit" id="farm_1_s_withdraw" onclick="$('farm_1_input_withdraw').value=this.innerHTML">0</span> PROX<br>
+				<input style="display:none" class="farmcontrols farm_i farm_input_withdraw" value="" placeholder="Un-Stake Amount" id="farm_1_input_withdraw">
+				<button style="display:none" class="farmcontrols farm_b farm_withdraw" onclick="farm_1_f_withdraw()">Withdraw PROX</button><br><br>
+
+				Claimable PROX Earnings<br>
+				<input class="farm_i farm_input_claim" value="Earnings Unknown" disabled="true" id="farm_1_s_claim"><br>
+				<button class="farmcontrols farm_b farm_claim" onclick="farm_1_f_claim()">Claim PROX</button><br><br>
+
+
+				<div style="display:none">
+					<input class="farm_i farm_input_claim_e" value="Earnings Unknown" disabled="true" id="farm_1_s_claim_e"> PROX<br>
+					<input class="farm_i farm_input_claim_s" value="Stake Unknown" disabled="true" id="farm_1_s_claim_s"> PROX<br>
+					<button class="farmcontrols farm_b farm_exit" onclick="farm_1_f_exit()">Claim & Exit</button><br>
+				</div>
 
 			</div>
 	</div>
