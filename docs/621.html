@@ -129,6 +129,7 @@ td a{text-decoration: 2px underline dotted #f0f}
 		<a href="https://charts.mtv.guru">💹Charts</a>
 		<a href="https://mtv.guru/airdropper">💦Airdropper</a>
 		<a href="https://scan.mtv.guru">🔎mtvSCAN</a>
+		<a href="https://mtv.guru/LF">🌽Farmlands</a>
 	</div>
 </div>
 <br>
@@ -1505,13 +1506,13 @@ async function refreshFarm()
 		});//REWARD DECIMALS
 		theCon.balanceOf(window.ethereum.selectedAddress)
 		.then(r => {
-			$("farm_1_s_withdraw").innerHTML=Number(r)/1e18;
+			$("farm_1_s_withdraw").innerHTML=(Number(r)/1e18).toFixed(18);
 			$("farm_3_i_ys").innerHTML=(Number(r)/1e18).toFixed(6);
-			$("farm_1_s_claim_s").value="Staked: "+(Number(r)/1e18)
+			$("farm_1_s_claim_s").value="Staked: "+(Number(r)/1e18).toFixed(18)
 		});
 
 		the2 = new ethers.Contract(pairadd, ab1, provider);
-		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
+		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=(Number(r)/1e18).toFixed(18)});
 		const tv = await the2.balanceOf(f_1_add).then(r => {return(r)});
 
 		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%"//;
