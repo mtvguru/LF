@@ -29,13 +29,18 @@ html{background:radial-gradient(circle at center, #127, #122, #100);color:#e3e9f
 .imglp2dex{width: 24px;position: relative;top:-32px;left:12px;background: #000;border-radius: 50px;z-index: 1;padding: 2px}
 .imglp2tok1{position: relative;left:-4px;z-index: -1}
 
+#tabdiv{overflow:auto}
 table {margin: auto;border-collapse:collapse}
 thead tr td {font-family: bold;font-size: 1.5em;padding-bottom: 32px}
-td{padding: 10px;text-align:center}
+td{padding: 10px;text-align:center;min-width:max-content;}
 tbody td:first-child{text-align: left}
 tr:hover{background: aqua;color: navy;cursor:zoom-in}
 .lfid{font-family: light;font-size: 3em}
 .lf-apr,.lf-tvl{font-size: 3em;font-family: light}
+
+.topbar{display:grid;grid-template-columns: auto;color:#e3e9f2;}
+.topbar a{text-decoration-line: none; padding: 0 2px;text-shadow: 6px 6px 5px black;	color: #e3e9f2;}
+
 </style>
 </head>
 <body>
@@ -75,6 +80,21 @@ tr:hover{background: aqua;color: navy;cursor:zoom-in}
 			</tbody>
 		</table>
 	</div>
+
+
+	<br><br>
+	<div class="topbar">
+		<div align="center">
+			<h1 class="h-l" align="center"><a href="https://eliteness.network"><img src="https://ftm.guru/icons/64.png" style="font-size:2em">Eliteness.Network</a><hr></h1>
+			<a href="https://vax.mtv.guru">💉VAX</a>
+			<a href="https://mtv.guru/GRAIN">🌾Kompound</a>
+			<a href="https://charts.mtv.guru">💹Charts</a>
+			<a href="https://mtv.guru/airdropper">💦Airdropper</a>
+			<a href="https://scan.mtv.guru">🔎mtvSCAN</a>
+			<a href="https://mtv.guru/LF">🌽Farmlands</a>
+		</div>
+	</div>
+		<br><br><br>
 
 	<div style="display:none">
 		<span id="pantvl"></span>
@@ -730,10 +750,10 @@ LFS = [
 		"LP2",
 		[
 			"0xCC9f5690a5Bb22f75F3736151228F516875F5774",
-			"vaxLP-DIRT/WMTV",
-			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b","0x8E321596267a4727746b2F48BC8736DB5Da26977"],
-			["PROX", "WMTV"],
-			["prox.png", "mtv.png"],
+			"vaxLP-PROX/WMTV",
+			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b","0xEa1199d50Ee09fA8062fd9dA3D55C6F90C1bABd2"],
+			["PROX", "USDC"],
+			["prox.png", "usdc.svg"],
 			["https://vax.mtv.guru", "V.A.X.", "vax.svg"]
 		],
 		"TOK1",
@@ -747,24 +767,48 @@ LFS = [
 		"621",
 		true,
 		"Liquidity Farming",
-		"0xA903bf19f275e5E9f66176f6C04B21C70f4B3C0b",
+		"0x62bcB741fA45AA5B9d0e8A3dCe31926CC17bBc2D",
 		0, 0, 0,
 		100,
 		"0 seconds",
 		"LP2",
 		[
-			"0xCC9f5690a5Bb22f75F3736151228F516875F5774",
+			"0x6AB59648514Af1083949f850Ef50957Ec5D59E64",
 			"vaxLP-WMTV/USDC",
-			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b","0x8E321596267a4727746b2F48BC8736DB5Da26977"],
+			["0x8E321596267a4727746b2F48BC8736DB5Da26977","0xEa1199d50Ee09fA8062fd9dA3D55C6F90C1bABd2"],
 			["WMTV", "USDC"],
 			["mtv.png", "usdc.svg"],
 			["https://vax.mtv.guru", "V.A.X.", "vax.svg"]
 		],
 		"TOK1",
 		[
-			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"],
-			["USDC"],
-			["usdc.svg"]
+			["0x8E321596267a4727746b2F48BC8736DB5Da26977"],
+			["WMTV"],
+			["mtv.png"]
+		]
+	],
+	[
+		"622",
+		true,
+		"Liquidity Farming",
+		"0x93d9d208576f54c27B8bbCa29aDC2AFa9D4cd895",
+		0, 0, 0,
+		100,
+		"0 seconds",
+		"LP2",
+		[
+			"0xc9037b123f10c36a6e4aa6cd60580f93386858e5",
+			"vaxLP-USDT/USDC",
+			["0x2f9c74d3C42023C533437c9EE743D4a6329e78Df","0xEa1199d50Ee09fA8062fd9dA3D55C6F90C1bABd2"],
+			["USDT", "USDC"],
+			["usdt.svg", "usdc.svg"],
+			["https://vax.mtv.guru", "V.A.X.", "vax.svg"]
+		],
+		"TOK1",
+		[
+			["0x8E321596267a4727746b2F48BC8736DB5Da26977"],
+			["WMTV"],
+			["mtv.png"]
 		]
 	],
 
