@@ -190,7 +190,8 @@ function fornum1(n,d)
 	else if(_n>1e6){n_=(_n/1e6).toFixed(2)+"M"}
 	else if(_n>1e3){n_=(_n/1e3).toFixed(2)+"K"}
 	else if(_n>1){n_=(_n/1e0).toFixed(2)+""}
-	return((_n).toFixed(6));
+	else {n_=(_n).toFixed(4)+""}
+	return(n_);
 }
 async function cw()
 {
