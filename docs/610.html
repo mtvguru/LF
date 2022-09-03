@@ -1490,7 +1490,7 @@ function farm_1_f_claim()
 	{
 		var conAdd = f_1_add;
 		theCon = new ethers.Contract(conAdd, farabi, signer);
-		theCon.getReward().then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
+		theCon.getReward({gasLimit:500000}).then(r => {console.log(r)}).then((c)=>{console.log(c);gs();});
 	}
 	catch(e){console.log(e)}
 }
