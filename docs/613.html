@@ -573,7 +573,7 @@ TIME_B0	= 1627724429;
 BLOCK_0 = 1000000;
 f_1_add = "0x104039C8dD6B30b6d8A9840074fE0ffcd1ff69e9";
 pairadd = "0xc891E5FFd94fE84C3DC6978eF1A8E2C5ae5a2079";
-tearned	= ["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"];
+TEARNED	= ["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"];
 RPC_URL = "https://rpc.mtv.ac"
 CHAINID = 62621;
 DECIMAL = 18;
@@ -1116,7 +1116,8 @@ async function refreshFarm()
 		the2 = new ethers.Contract(pairadd, ab1, provider);
 		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
 		const tv = await the2.balanceOf(f_1_add).then(r => {return(r)});
-
+		
+		theCon = new ethers.Contract(f_1_add, ["function apr() public view returns (uint)", "function tvl() public view returns (uint)"], provider);
 		_aprtvl = await Promise.all([theCon.apr(), theCon.tvl()]);
 		$("farm_3_i_apr").innerHTML=(Number(_aprtvl[0])/1e18).toLocaleString() +"%"//;
 		$("farm_3_i_tvl").innerHTML="$" + (Number(_aprtvl[1])/1e18).toLocaleString()//;
@@ -1128,7 +1129,7 @@ async function DrefreshFarm()
 {
 	try
 	{
-		theCon = new ethers.Contract(f_1_add, farabi, provider);
+		theCon = new ethers.Contract(f_1_add, ["function apr() public view returns (uint)", "function tvl() public view returns (uint)"], provider);
 		_aprtvl = await Promise.all([theCon.apr(), theCon.tvl()]); 
 		$("farm_3_i_apr").innerHTML=(Number(_aprtvl[0])/1e18).toLocaleString() +"%"//;
 		$("farm_3_i_tvl").innerHTML="$" + (Number(_aprtvl[1])/1e18).toLocaleString()//;
