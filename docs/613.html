@@ -1139,7 +1139,7 @@ async function DrefreshFarm()
 
 async function guh() {
 	theCon = new ethers.Contract(f_1_add, farabi, provider);
-	theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
+	//theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	if(window.ethereum.selectedAddress == null){$("farmhist").innerHTML="Wallet Not Connected!";return}
 	$("farmhist").innerHTML="";
 	totearn=0;
