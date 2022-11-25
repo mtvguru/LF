@@ -768,6 +768,30 @@ LFS = [
 		]
 	],
 	[
+		"613",
+		true,
+		"Liquidity Farming",
+		"0x104039C8dD6B30b6d8A9840074fE0ffcd1ff69e9",
+		0, 0, 0,
+		10,
+		"0 seconds",
+		"LP2",
+		[
+			"0xc891E5FFd94fE84C3DC6978eF1A8E2C5ae5a2079",
+			"vaxLP-PROX/WMTV",
+			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b","0x8E321596267a4727746b2F48BC8736DB5Da26977"],
+			["PROX", "WMTV"],
+			["prox.png", "mtv.png"],
+			["https://vax.mtv.guru", "V.A.X.", "vax.svg"]
+		],
+		"TOKN",
+		[
+			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"],
+			["PROX"],
+			["prox.png"]
+		]
+	],
+	[
 		"621",
 		true,
 		"Liquidity Farming",
@@ -843,12 +867,10 @@ function asshtml(t,d) {
 		`)
 	}
 	if(t=="TOKN") {
-		h=""
-		for(n=0;n< d[0].length;n++) {
-			h += (`
-				<img class="imgtok1" src="https://ftm.guru/icons/${d[2][n]}">${d[1][n]}
-			`)
-		}
+		h1="";h2="";
+		for(n=0;n< d[0].length;n++) { h += (`<img class="imgtok1" src="https://ftm.guru/icons/${d[2][n]}">`) }
+		for(n=0;n< d[0].length;n++) { h += (`<div align="justify">${d[1][n]}</div>`) }
+		h=h1+"<br>"+h2;
 		return(h)
 	}
 	if(t=="LP2") {
