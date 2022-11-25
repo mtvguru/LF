@@ -130,7 +130,7 @@ async function basetrip()
 		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
 		provider = new ethers.providers.Web3Provider(window.ethereum)
 		signer = provider.getSigner();
-		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();refreshFarm();cw();arf();guh()}
+		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();refreshFarm();cw();arf();/*guh()*/}
 	}
 	else {
 		console.log("Couldn't find Ethereum Provider - ",CHAINID,window.ethereum.chainId)
@@ -251,7 +251,7 @@ async function cw2()
 	$("cw_m").innerHTML=""
 	$("connect").style.display="none";
 	$("switch").style.display="block";
-	farm_1_f_chappro()
+	//farm_1_f_chappro()
 	//gubs();
 	return(1);
 }
@@ -868,8 +868,8 @@ function asshtml(t,d) {
 	}
 	if(t=="TOKN") {
 		h1="";h2="";
-		for(n=0;n< d[0].length;n++) { h += (`<img class="imgtok1" src="https://ftm.guru/icons/${d[2][n]}">`) }
-		for(n=0;n< d[0].length;n++) { h += (`<div align="justify">${d[1][n]}</div>`) }
+		for(n=0;n< d[0].length;n++) { h1 += (`<img class="imgtok1" src="https://ftm.guru/icons/${d[2][n]}">`) }
+		for(n=0;n< d[0].length;n++) { h2 += (`<div align="justify">${d[1][n]}</div>`) }
 		h=h1+"<br>"+h2;
 		return(h)
 	}
