@@ -124,13 +124,36 @@ window.addEventListener('load',async function()
 async function basetrip()
 {
 	if(!(window.ethereum)) {
-		$("cw_m").innerHTML = "Wallet wasn't detected!";console.log("Wallet wasn't detected!");provider = new ethers.providers.JsonRpcProvider(RPC_URL);DrefreshFarm();pantvl();return
+		$("cw_m").innerHTML = "Wallet wasn't detected!";
+		console.log("Wallet wasn't detected!");
+		provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+		DrefreshFarm();pantvl();return;
 	}
 	else if(Number(window.ethereum.chainId)==CHAINID) {
 		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
 		provider = new ethers.providers.Web3Provider(window.ethereum)
 		signer = provider.getSigner();
-		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();refreshFarm();cw();arf();/*guh()*/}
+		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();pantvl();refreshFarm();cw();arf();/*guh()*/;}
+	}
+	else if( (Number(window.ethereum.chainId)!=null) &&(window.ethereum.chainId!=CHAINID)) {
+		$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);
+		DrefreshFarm();
+		pantvl();
+		await window.ethereum.request({
+			method: "wallet_addEthereumChain",
+			params: [{
+				chainId: "62621",
+				rpcUrls: ["https://rpc.mtv.ac"],
+				chainName: "MultiVAC",
+				nativeCurrency: {
+				name: "MTV",
+				symbol: "MTV",
+				decimals: 18
+				},
+				blockExplorerUrls: ["https://mtvscout.com"]
+			}]
+		});
+		cw();
 	}
 	else {
 		console.log("Couldn't find Ethereum Provider - ",CHAINID,window.ethereum.chainId)
@@ -138,30 +161,10 @@ async function basetrip()
 		provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 		signer = provider.getSigner()
 		$("connect").innerHTML=`Wallet not found.<br><br><button onclick="window.location.reload()" id="btn-connect">Retry?</button>`;
-		DrefreshFarm()
+		DrefreshFarm();pantvl();
 	}
-	if( (Number(window.ethereum.chainId)!=null) &&(window.ethereum.chainId!=CHAINID)) {
-		$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);
-		DrefreshFarm();
-		pantvl();
-		await window.ethereum.request({
-    	method: "wallet_addEthereumChain",
-    	params: [{
-        	chainId: "62621",
-        	rpcUrls: ["https://rpc.mtv.ac"],
-        	chainName: "MultiVAC",
-        	nativeCurrency: {
-            	name: "MTV",
-            	symbol: "MTV",
-            	decimals: 18
-        	},
-        	blockExplorerUrls: ["https://mtvscout.com"]
-    		}]
-		});
-		basetrip()
-	}
-	DrefreshFarm()
-	pantvl()
+	//DrefreshFarm()
+	//pantvl()
 }
 async function pantvl()
 {
@@ -869,7 +872,7 @@ function asshtml(t,d) {
 	if(t=="TOKN") {
 		h1="";h2="";
 		for(n=0;n< d[0].length;n++) { h1 += (`<img class="imgtok1" src="https://ftm.guru/icons/${d[2][n]}">`) }
-		for(n=0;n< d[0].length;n++) { h2 += (`<div align="justify">${d[1][n]}</div>`) }
+		for(n=0;n< d[0].length;n++) { h2 += (` ${d[1][n]} + `) }
 		h=h1+"<br>"+h2;
 		return(h)
 	}
