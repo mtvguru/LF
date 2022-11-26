@@ -133,7 +133,8 @@ async function basetrip()
 		console.log("Recognized Ethereum Chain:", window.ethereum.chainId,CHAINID);
 		provider = new ethers.providers.Web3Provider(window.ethereum)
 		signer = provider.getSigner();
-		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);DrefreshFarm();pantvl();refreshFarm();cw();arf();/*guh()*/;}
+		if(!(window.ethereum.selectedAddress==null)){console.log("Found old wallet:", window.ethereum.selectedAddress);pantvl();refreshFarm();arf();/*guh()*/;}
+		else{DrefreshFarm();pantvl();cw();arf();}
 	}
 	else if( (Number(window.ethereum.chainId)!=null) &&(window.ethereum.chainId!=CHAINID)) {
 		$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);
