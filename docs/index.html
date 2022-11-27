@@ -137,7 +137,8 @@ async function basetrip()
 		else{DrefreshFarm();pantvl();cw();arf();}
 	}
 	else if( (Number(window.ethereum.chainId)!=null) &&(window.ethereum.chainId!=CHAINID)) {
-		$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);
+		$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;
+		provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 		DrefreshFarm();
 		pantvl();
 		window.ethereum.request({
@@ -160,7 +161,6 @@ async function basetrip()
 		console.log("Couldn't find Ethereum Provider - ",CHAINID,window.ethereum.chainId)
 		if((typeof Number(window.ethereum.chainId) == "number")){$("cw_m").innerHTML = "Wrong network! Switch from " + Number(window.ethereum.chainId)+" to "+CHAINID}
 		provider = new ethers.providers.JsonRpcProvider(RPC_URL);
-		signer = provider.getSigner()
 		$("connect").innerHTML=`Wallet not found.<br><br><button onclick="window.location.reload()" id="btn-connect">Retry?</button>`;
 		DrefreshFarm();pantvl();
 	}
