@@ -140,7 +140,7 @@ async function basetrip()
 		$("cw_m").innerHTML = "Wrong network! Please Switch to "+CHAINID;provider = new ethers.providers.Web3Provider(window.ethereum);
 		DrefreshFarm();
 		pantvl();
-		await window.ethereum.request({
+		window.ethereum.request({
 			method: "wallet_addEthereumChain",
 			params: [{
 				chainId: "0x"+(62621).toString(16),
@@ -153,8 +153,8 @@ async function basetrip()
 				},
 				blockExplorerUrls: ["https://mtvscout.com"]
 			}]
-		});
-		cw();
+		})
+		.then(await cw())
 	}
 	else {
 		console.log("Couldn't find Ethereum Provider - ",CHAINID,window.ethereum.chainId)
@@ -907,7 +907,8 @@ async function refreshFarm()
 {
 	try
 	{
-		console.log("rf")
+		console.log("rf");
+		draw(true);
 	}
 	catch(e){console.log(e);}
 }
@@ -915,8 +916,8 @@ async function DrefreshFarm()
 {
 	try
 	{
-		console.log("drf")
-		draw(false)
+		console.log("drf");
+		draw(false);
 	}
 	catch(e){console.log(e);}
 }
