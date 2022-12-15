@@ -895,7 +895,7 @@ async function paint(p) {
 		<td class="">${asshtml(f[9],f[10])}</td>
 		<td class="">${asshtml(f[11],f[12])}</td>
 		<td class="lf-tvl">${fornum2(Number(p[2]),18)}</td>
-		<td class="lf-apr">${fornum2(Number(p[1]),18)}</td>
+		<td class="lf-apr">${f[0]=="613"?fornum2(Number(p[1]),16):fornum2(Number(p[1]),18)}</td>
 		<td class="lf-msh" style="display:${p[5]?'':'none'}">${fornum2(Number(p[4])/Number(p[3])*Number(p[2]),18)}</td>
 	`
 	tr.setAttribute('onclick','window.location='+f[0])
