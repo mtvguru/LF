@@ -26,7 +26,7 @@ html{background:radial-gradient(circle at center, #127, #122, #100);color:#e3e9f
 #switch {display:none;border:none}
 
 .imglp2tok0,.imglp2tok1,.imgtok1{width:48px;height: 48px}
-.imglp2dex{width: 24px;position: relative;top:-32px;left:12px;background: #000;border-radius: 50px;z-index: 1;padding: 2px}
+.imglp2dex{width: 24px;position: relative;top:-32px;left:12px;background: #000;border-radius: 4px;z-index: 1;padding: 2px}
 .imglp2tok1{position: relative;left:-4px;z-index: }
 
 #tabdiv{overflow:auto}
@@ -44,6 +44,9 @@ tr:hover{background: aqua;color: navy;cursor:zoom-in}
 .lf-apr::after{content: "%";font-size: 0.5em;font-family: ;}
 .lf-tvl::before{content: "$";font-size: 0.5em;font-family:}
 .lf-apr,.lf-tvl{text-align: right}
+
+.retired {color: grey;-webkit-filter: grayscale(100%);filter: grayscale(100%);background: rgba(0,0,0,0.25);opacity:0.75}
+
 </style>
 </head>
 <body>
@@ -680,7 +683,7 @@ farabi=[
 ];
 
 LFS = [
-	// [ id, farm-addr, apr, tvl, tot-sup, dep-fee, wd-lock, [ dep-addr, dep-name, dep-kind, [dep-tok1,,dep-tokN], [dep-tname1,,dep-tnameN], [dep-tpic1,,dep-tpicN] ], earn-kind, [earn-tok1,,earn-tokN], [earn-tname1,,earn-tnameN], [earn-tpic1,,earn-tpicN] ]
+	// [ id, farm-addr, apr, tvl, tot-sup, dep-fee, wd-lock, [ dep-addr, dep-name, dep-kind, [dep-tok1,,dep-tokN], [dep-tname1,,dep-tnameN], [dep-tpic1,,dep-tpicN] ], earn-kind, [earn-tok1,,earn-tokN], [earn-tname1,,earn-tnameN], [earn-tpic1,,earn-tpicN], active ]
 	[
 		"601",
 		true,
@@ -703,7 +706,8 @@ LFS = [
 			["0x2Eb19Db032dC60039d35E36918d33197D9F7D7b9"],
 			["DIRT"],
 			["dirt.png"]
-		]
+		],
+		1
 	],
 	[
 		"610",
@@ -724,7 +728,8 @@ LFS = [
 			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"],
 			["PROX"],
 			["prox.png"]
-		]
+		],
+		1
 	],
 	[
 		"611",
@@ -745,7 +750,8 @@ LFS = [
 			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"],
 			["PROX"],
 			["prox.png"]
-		]
+		],
+		1
 	],
 	[
 		"612",
@@ -769,7 +775,8 @@ LFS = [
 			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"],
 			["PROX"],
 			["prox.png"]
-		]
+		],
+		1
 	],
 	[
 		"613",
@@ -793,7 +800,8 @@ LFS = [
 			["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"],
 			["PROX"],
 			["prox.png"]
-		]
+		],
+		1
 	],
 	[
 		"621",
@@ -817,7 +825,8 @@ LFS = [
 			["0x8E321596267a4727746b2F48BC8736DB5Da26977"],
 			["WMTV"],
 			["mtv.png"]
-		]
+		],
+		1
 	],
 	[
 		"622",
@@ -841,7 +850,33 @@ LFS = [
 			["0x8E321596267a4727746b2F48BC8736DB5Da26977"],
 			["WMTV"],
 			["mtv.png"]
-		]
+		],
+		false
+	],
+	[
+		"631",
+		true,
+		"Liquidity Farming",
+		"0x93d9d208576f54c27B8bbCa29aDC2AFa9D4cd895",
+		0, 0, 0,
+		100,
+		"0 seconds",
+		"LP2",
+		[
+			"0xc9037b123f10c36a6e4aa6cd60580f93386858e5",
+			"ABcDeFX.LP-USDT/USDC",
+			["0x2f9c74d3C42023C533437c9EE743D4a6329e78Df","0xEa1199d50Ee09fA8062fd9dA3D55C6F90C1bABd2"],
+			["USDT", "USDC"],
+			["usdt.svg", "usdc.svg"],
+			["https://abcdefx.eliteness.network", "ABcDeFX", "abcdefx.svg"]
+		],
+		"TOK1",
+		[
+			["0x8E321596267a4727746b2F48BC8736DB5Da26977"],
+			["WMTV"],
+			["mtv.png"]
+		],
+		1
 	],
 
 
@@ -899,6 +934,7 @@ async function paint(p) {
 		<td class="lf-msh" style="display:${p[5]?'':'none'}">${fornum2(Number(p[4])/Number(p[3])*Number(p[2]),18)}</td>
 	`
 	tr.setAttribute('onclick','window.location='+f[0])
+	if(f[13]==false) { tr.setAttribute('class','retired') }
 	$("tb").append(tr)
 
 }
