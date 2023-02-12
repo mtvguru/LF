@@ -36,14 +36,14 @@ td{padding: 10px;text-align:center;min-width:max-content;}
 tbody td:first-child{text-align: left}
 tr:hover{background: aqua;color: navy;cursor:zoom-in}
 .lfid{font-family: light;font-size: 3em}
-.lf-apr,.lf-tvl{font-size: 3em;font-family: light}
+.lf-apr, .lf-tvl, .lf-msh{font-size: 3em;font-family: light}
 
 .topbar{display:grid;grid-template-columns: auto;color:#e3e9f2;}
 .topbar a{text-decoration-line: none; padding: 0 2px;text-shadow: 6px 6px 5px black;	color: #e3e9f2;}
 
 .lf-apr::after{content: "%";font-size: 0.5em;font-family: ;}
-.lf-tvl::before{content: "$";font-size: 0.5em;font-family:}
-.lf-apr,.lf-tvl{text-align: right}
+.lf-tvl::before, .lf-msh::before{content: "$";font-size: 0.5em;font-family:}
+.lf-apr, .lf-tvl, .lf-msh{text-align: right}
 
 .retired {color: grey;-webkit-filter: grayscale(100%);filter: grayscale(100%);background: rgba(0,0,0,0.25);opacity:0.75}
 
@@ -898,7 +898,7 @@ LFS = [
 			["WMTV"],
 			["mtv.png"]
 		],
-		1
+		false
 	],
 
 
