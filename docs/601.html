@@ -1663,10 +1663,11 @@ async function extendRewards() {
 		<h2>Extend Rewards</h2>
 		Enter the amount of DIRT you want to add as rewards to this Farmland. It will also extend the dry date by 30 days!<br><br>
 		<input id="extendRewardsInput" placeholder="Amount">
-		<br><br><button onclick="notifyRewards(${$('extendRewardsInput').value})">Add</button>
+		<br><br><button onclick="notifyRewards()">Add</button>
 	`);
 }
-async function notifyRewards(_amt) {
+async function notifyRewards() {
+	_amt = $('extendRewardsInput').value;
 	_T = new ethers.Contract(TEARNED,ab1,signer);
 	_ab = await Promise.all([
 		_T.balanceOf(window.ethereum.selectedAddress),
