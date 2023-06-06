@@ -1661,7 +1661,7 @@ aapw=0;
 async function extendRewards() {
 	notice(`
 		<h2>Extend Rewards</h2>
-		Enter the amount of DIRT you want to add as rewards to this Farmland. It will also extend the dry date by 30 days!<br><br>
+		Enter the amount of DIRT you want to Donate as rewards to this Farmland. It will also extend the dry date by 30 days!<br><br>
 		<input id="extendRewardsInput" placeholder="Amount">
 		<br><br><button onclick="notifyRewards()">Add</button>
 	`);
@@ -1677,9 +1677,9 @@ async function notifyRewards() {
 	if(Number(_ab[0])/1e18 < _amt) { notice(`Insufficient Balance!`); return; }
 
 	if(Number(_ab[1])/1e18 < _amt) {
-		notice(`Insufficient Allowance!<br><br>Please allow the Farmland to expend ${amt} tokens in your wallet!`);
-		txh = await _T.approve(f_1_add, ethers.constants.MaxUint256);
-		notice(`Approving ${amt} tokens..`);
+		notice(`Insufficient Allowance!<br><br>Please allow the Farmland to spend ${_amt} tokens from your wallet!`);
+		txh = await _T.approve(f_1_add, BigInt(Math.floor(_amt*1e18)) );//ethers.constants.MaxUint256
+		notice(`Approving ${_amt} tokens..`);
 		await txh.wait();
 	}
 
@@ -1688,6 +1688,7 @@ async function notifyRewards() {
 	txh = await _F.notifyRewardAmount( BigInt(Math.floor(_amt*1e18)) );
 	notice(`Adding Rewards..`);
 	await txh.wait();
+	notice(`<h2>Rewards added!</h2>`);
 
 
 }
