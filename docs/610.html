@@ -409,7 +409,9 @@ td a{text-decoration: 2px underline dotted #f0f}
 				<span></span><span id="farm_3_i_apr">?</span>
 				<span></span><span>A.P.R.</span><span></span>
 				<span></span><span id="farm_3_i_tvl">?</span>
-				<span></span><span>T.V.L.</span><span></span><!--
+				<span></span><span>T.V.L.</span><span></span>
+				<span></span><span id="farm_3_i_unlock">?</span>
+				<span></span><span>Unlock Date</span><span></span><!--
 				<span></span><span id="farm_3_i_roi"></span>
 				<span></span><span></span><span></span>-->
 			</div>
@@ -1037,6 +1039,20 @@ abbrove=[
 farabi=[
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "unlock",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "account",
@@ -1546,6 +1562,7 @@ async function refreshFarm()
 
 		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%"//;
 		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18).toLocaleString()//;
+		$("farm_3_i_unlock").innerHTML=(new Date(Number(await theCon.unlock())*1e3)).toLocaleString()//;
 
 	}
 	catch(e){console.log(e);}
@@ -1558,6 +1575,7 @@ async function DrefreshFarm()
 
 		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%";//
 		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18).toLocaleString();//
+		$("farm_3_i_unlock").innerHTML=(new Date(Number(await theCon.unlock())*1e3)).toLocaleString()//;
 
 		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
