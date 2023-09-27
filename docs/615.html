@@ -784,25 +784,6 @@ ab1=
 	"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "guy",
-				"type": "address"
-			}
-		],
-		"name": "approve",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 	"constant": true,
 	"inputs": [
 		{
@@ -1274,7 +1255,7 @@ async function extendRewards() {
 }
 async function notifyRewards() {
 	_amt = $('extendRewardsInput').value;
-	_T = new ethers.Contract(TEARNED,ab1,signer);
+	_T = new ethers.Contract(TEARNED[0],ab1,signer);
 	_ab = await Promise.all([
 		_T.balanceOf(window.ethereum.selectedAddress),
 		_T.allowance(window.ethereum.selectedAddress,f_1_add)
