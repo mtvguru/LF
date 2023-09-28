@@ -1171,7 +1171,7 @@ async function refreshFarm()
 
 		theCon = new ethers.Contract(f_1_add, ["function apr() public view returns (uint)", "function tvl() public view returns (uint)"], provider);
 		_aprtvl = await Promise.all([theCon.apr(), theCon.tvl()]);
-		$("farm_3_i_apr").innerHTML=(Number(_aprtvl[0])/1e18*100).toLocaleString() +"%"//;
+		$("farm_3_i_apr").innerHTML=(Number(_aprtvl[0])/1e18).toLocaleString() +"%"//;
 		$("farm_3_i_tvl").innerHTML="$" + (Number(_aprtvl[1])/1e18).toLocaleString()//;
 
 	}
@@ -1183,7 +1183,7 @@ async function DrefreshFarm()
 	{
 		theCon = new ethers.Contract(f_1_add, farabi, provider);
 		_aprtvl = await Promise.all([theCon.apr(), theCon.tvl()]);
-		$("farm_3_i_apr").innerHTML=(Number(_aprtvl[0])/1e18*100).toLocaleString() +"%"//;
+		$("farm_3_i_apr").innerHTML=(Number(_aprtvl[0])/1e18).toLocaleString() +"%"//;
 		$("farm_3_i_tvl").innerHTML="$" + (Number(_aprtvl[1])/1e18).toLocaleString()//;
 		theCon.rewardData(TEARNED[0]).then(r => {$("pf").innerHTML=new Date(Number(r[2]) * 1000)});
 	}
