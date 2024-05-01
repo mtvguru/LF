@@ -656,7 +656,7 @@ decEARN = 18;
 EXPLORE = "https://mtvscout.com/address/";
 EXPLORT = "https://mtvscout.com/tx/";
 tsca = "0xe345A50C33e5c9D0284D6fF0b891c4Fc99a9C117";
-STAKE_NAME = "vaxLP";
+DEPOSIT_NAME = "vaxLP";
 TEARNED_NAME = ["DIRT"];
 function $(_) {return document.getElementById(_);}
 let provider = {};
@@ -1671,7 +1671,7 @@ async function guh() {
 					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
 					<td>Claim Reward</td>
 					<td>DIRT</td>
-					<td>${Number(L[i].data)/10**decEARN}</td>
+					<td>${Math.floor(Number(L[i].data)/10**decEARN).toLocaleString()}.<span style="font-family:light_italic">${((Number(L[i].data)/10**decEARN)%1)*1e18}</span></td>
 					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
 				</tr>
 			`
@@ -1684,7 +1684,7 @@ async function guh() {
 					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
 					<td>Withdrawal</td>
 					<td>vaxLP</td>
-					<td>${Number(L[i].data)/10**DECIMAL}</td>
+					<td>${Math.floor(Number(L[i].data)/10**DECIMAL).toLocaleString()}.<span style="font-family:light_italic">${((Number(L[i].data)/10**DECIMAL)%1)*1e18}</span></td>
 					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
 				</tr>
 			`
@@ -1695,7 +1695,7 @@ async function guh() {
 					<td>${ (new Date( ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3 )).toLocaleString() }</td>
 					<td>New Deposit</td>
 					<td>vaxLP</td>
-					<td>${Number(L[i].data)/10**DECIMAL}</td>
+					<td>${Math.floor(Number(L[i].data)/10**DECIMAL).toLocaleString()}.<span style="font-family:light_italic">${((Number(L[i].data)/10**DECIMAL)%1)*1e18}</span></td>
 					<td><a href="${EXPLORT+L[i].transactionHash}" target="blank">${L[i].transactionHash.substring(0,10)}</td>
 				</tr>
 			`
@@ -1762,7 +1762,7 @@ function ecp_farmhist() {
   		yAxis: [
     		{
       			type: 'value',
-      			name: STAKED_NAME,
+      			name: DEPOSIT_NAME,
       			position: 'left',
       			alignTicks: true,
       			axisLine: {
