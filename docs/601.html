@@ -1624,8 +1624,8 @@ async function guh() {
 
 	L = await provider.getLogs({address:f_1_add,topics:[[EGR,EWD,EST],"0x000000000000000000000000"+window.ethereum.selectedAddress.substr(2)],toBlock:"latest",fromBlock:GENESIS});
 
-	if(L.length>0) {
-		STATE.farmhist = { claims: [], deposits: [], withdrawls: [], stakedBalance: [], totalClaimed: [] } ;
+	STATE.farmhist = { claims: [], deposits: [], withdrawals: [], stakedBalance: [], totalClaimed: [] }
+	if(L.length>0) { ;
 		for(i=0; i < L.length; i++) {
 			let _evtime = ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3;
 			if(L[i].topics[0]==EWD) { STATE.farmhist.deposits.push(     [ _evtime , Number(L[i].data)/10**DECIMAL ] ) }
@@ -1643,6 +1643,8 @@ async function guh() {
 				STATE.farmhist.totalClaimed.push( [ _evtime , Number(L[i].data)/10**decEARN + _prevTotalClaim ] )
 			}
 		}
+		try{ecp_farmhist()}
+		catch(e){console.log(e)}
 	}
 
 
@@ -1684,8 +1686,6 @@ async function guh() {
 		}
 	}
 
-	try{ecp_farmhist()}
-	catch(e){console.log(e)}
 
 }
 
@@ -1779,7 +1779,7 @@ function ecp_farmhist() {
       		name: 'Withdrawals',
       		type: 'bar',
       		stack: 'd_w',
-      		data: STATE.farmhist.withdrawls,//[ [21, -59], [29, -264], [86, -182], [117, -62],[150,-90] ]
+      		data: STATE.farmhist.withdrawals,//[ [21, -59], [29, -264], [86, -182], [117, -62],[150,-90] ]
     		},
     		{
       		name: 'Staked Balance',
