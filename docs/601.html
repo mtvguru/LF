@@ -166,6 +166,11 @@ td a{text-decoration: 2px underline dotted #f0f}
 	max-height: 30%;
 	overflow: auto;
 }
+
+
+#ec-farmhist * {
+￼    text-shadow: none !important;
+}
 </style>
 </head>
 <div class="topbar">
@@ -1636,7 +1641,7 @@ async function guh() {
 				let _prevStakedBalance = STATE.farmhist.stakedBalance.length > 0 ? Number(STATE.farmhist.stakedBalance[STATE.farmhist.stakedBalance.length-1]) : 0 ;
 				STATE.farmhist.stakedBalance.push([
 					_evtime ,
-					_prevStakedBalance + Number(L[i].data)/10**decEARN * L[i].topics[0]==EST ? 1 : -1
+					_prevStakedBalance + Number(L[i].data)/10**decEARN * (L[i].topics[0]==EST) ? 1 : -1
 				])
 			}
 			if(L[i].topics[0]==EGR) {
