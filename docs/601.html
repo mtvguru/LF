@@ -548,7 +548,7 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 	</div>
 	<br><br>
 
-	<div id="ec-farmhist" style="min-width: 80%;min-height:500px;background:#fffa"></div>
+	<div id="ec-farmhist" style="min-width: 80%;min-height:500px;"></div>
 
 
 </div>
@@ -648,6 +648,8 @@ decEARN = 18;
 EXPLORE = "https://mtvscout.com/address/";
 EXPLORT = "https://mtvscout.com/tx/";
 tsca = "0xe345A50C33e5c9D0284D6fF0b891c4Fc99a9C117";
+STAKE_NAME = "vaxLP";
+TEARNED_NAME = ["DIRT"];
 function $(_) {return document.getElementById(_);}
 let provider = {};
 let signer = {};
@@ -1629,17 +1631,17 @@ async function guh() {
 		for(i=0; i < L.length; i++) {
 			let _evtime = ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3;
 			if(L[i].topics[0]==EWD) { STATE.farmhist.deposits.push(     [ _evtime , Number(L[i].data)/10**DECIMAL ] ) }
-			if(L[i].topics[0]==EST) { STATE.farmhist.withdrawals.push(  [ _evtime , Number(L[i].data)/10**DECIMAL ] ) }
-			if(L[i].topics[0]==EWD || L[i].topics[0]==EWD ) {
-				let _prevStakedBalance = i > 0 ? STATE.farmhist.stakedBalance[i-1] : 0 ;
+			if(L[i].topics[0]==EST) { STATE.farmhist.withdrawals.push(  [ _evtime , Number(L[i].data)/10**DECIMAL * -1 ] ) }
+			if(L[i].topics[0]==EST || L[i].topics[0]==EWD ) {
+				let _prevStakedBalance = STATE.farmhist.stakedBalance.length > 0 ? Number(STATE.farmhist.stakedBalance[STATE.farmhist.stakedBalance.length-1]) : 0 ;
 				STATE.farmhist.stakedBalance.push([
 					_evtime ,
-					_prevStakedBalance + Number(L[i].data)/10**decEARN * L[i].topics[0]==EWD ? 1 : -1
+					_prevStakedBalance + Number(L[i].data)/10**decEARN * L[i].topics[0]==EST ? 1 : -1
 				])
 			}
 			if(L[i].topics[0]==EGR) {
 				STATE.farmhist.claims.push( [ _evtime , Number(L[i].data)/10**decEARN ] ) ;
-				let _prevTotalClaim = i > 0 ? STATE.farmhist.totalClaimed[STATE.farmhist.totalClaimed.length-1] : 0 ;
+				let _prevTotalClaim = STATE.farmhist.totalClaimed.length > 0 ? Number(STATE.farmhist.totalClaimed[STATE.farmhist.totalClaimed.length-1]) : 0 ;
 				STATE.farmhist.totalClaimed.push( [ _evtime , Number(L[i].data)/10**decEARN + _prevTotalClaim ] )
 			}
 		}
@@ -1728,8 +1730,10 @@ async function notifyRewards() {
 }
 
 function ecp_farmhist() {
-	var myChart = echarts.init(document.getElementById('ec-farmhist'));
+	var myChart = echarts.init(document.getElementById('ec-farmhist'), 'dark');
+
 	option = {
+		color: '#fff',
   		tooltip: {
     		trigger: 'axis',
     		axisPointer: {
@@ -1752,7 +1756,7 @@ function ecp_farmhist() {
         		show: true,
       		},
       		axisLabel: {
-        		formatter: '{value} vaxLP'
+        		formatter: '{value} ' + STAKE_NAME
       		}
     		},
     		{
@@ -1764,7 +1768,7 @@ function ecp_farmhist() {
         		show: true,
       		},
       		axisLabel: {
-        		formatter: '{value} DIRT'
+        		formatter: '{value} ' + TEARNED[0]
       		}
     		}
   		],
