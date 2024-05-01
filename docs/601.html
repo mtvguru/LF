@@ -1640,9 +1640,11 @@ async function guh() {
 				])
 			}
 			if(L[i].topics[0]==EGR) {
-				STATE.farmhist.claims.push( [ _evtime , Number(L[i].data)/10**decEARN ] ) ;
-				let _prevTotalClaim = STATE.farmhist.totalClaimed.length > 0 ? Number(STATE.farmhist.totalClaimed[STATE.farmhist.totalClaimed.length-1]) : 0 ;
-				STATE.farmhist.totalClaimed.push( [ _evtime , Number(L[i].data)/10**decEARN + _prevTotalClaim ] )
+				let _newclaim = Number(Number(L[i].data)/10**decEARN);
+				STATE.farmhist.claims.push( [ _evtime , _newclaim ] ) ;
+
+				let _prevTotalClaim = (STATE.farmhist.totalClaimed.length == 0) ? 0 : Number(STATE.farmhist.totalClaimed[STATE.farmhist.totalClaimed.length-1]);
+				STATE.farmhist.totalClaimed.push( [ _evtime , _newclaim + _prevTotalClaim ] ) ;
 			}
 		}
 		try{ecp_farmhist()}
@@ -1733,7 +1735,6 @@ function ecp_farmhist() {
 	var myChart = echarts.init(document.getElementById('ec-farmhist'), 'dark');
 
 	option = {
-		color: '#fff',
   		tooltip: {
     		trigger: 'axis',
     		axisPointer: {
