@@ -34,7 +34,7 @@ button:disabled {
 .lpapr{text-shadow: rgba(0,255,255,1) 0px 0px 10px;color:aqua;font-size:2em}
 .notice{font-weight: bold;font-size: 1.25em;margin:10%;background: #000;border-radius: 20px;padding:2%;border:5px dashed}
 hr{box-shadow: rgba(0,255,255,0.2) 0px 0px 10px 10px;background: #090919;border-radius: 15px;border:aqua 2px solid;}
-.mainstage:nth-child(2){background-image: url("../img/bg-sun.jpg");background-size: 100%;background-repeat: no-repeat ;color:#020611;text-shadow: 0 0 2px black;}
+.mainstage:nth-child(2){/*background-image: url("../img/bg-sun.jpg");*/background-size: 100%;background-repeat: no-repeat ;color:#020611;text-shadow: 0 0 2px black;}
 .mainstage:nth-child(2) span{background: rgba(9,9,32,0.5);border-bottom:1px dotted aqua ;}
 .mainstage:nth-child(2) h4,.mainstage:nth-child(2) h3{background: rgba(9,9,32,0.5);width:max-content;border:1px double aqua;border-radius: 20px;padding: 5px}
 .mainstage:nth-child(2) span:nth-child(){border:none}
@@ -168,6 +168,9 @@ td a{text-decoration: 2px underline dotted #f0f}
 }
 
 
+#ec-farmhist {
+	border-radius:10px;
+}
 #ec-farmhist * {
 ￼    text-shadow: none !important;
 }
@@ -1614,8 +1617,8 @@ async function DrefreshFarm()
 	}
 	catch(e){console.log(e);}
 
-	try{paintCharts()}
-	catch(e){console.log(e);}
+	//try{paintCharts()}
+	//catch(e){console.log(e);}
 
 }
 
@@ -1633,23 +1636,27 @@ async function guh() {
 
 	STATE.farmhist = { claims: [], deposits: [], withdrawals: [], stakedBalance: [], totalClaimed: [] }
 	if(L.length>0) { ;
+		let _stkbal = 0;
+		let _totcl = 0;
 		for(i=0; i < L.length; i++) {
 			let _evtime = ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3;
-			if(L[i].topics[0]==EWD) { STATE.farmhist.deposits.push(     [ _evtime , Number(L[i].data)/10**DECIMAL ] ) }
-			if(L[i].topics[0]==EST) { STATE.farmhist.withdrawals.push(  [ _evtime , Number(L[i].data)/10**DECIMAL * -1 ] ) }
-			if(L[i].topics[0]==EST || L[i].topics[0]==EWD ) {
-				let _prevStakedBalance = STATE.farmhist.stakedBalance.length > 0 ? Number(STATE.farmhist.stakedBalance[STATE.farmhist.stakedBalance.length-1]) : 0 ;
-				STATE.farmhist.stakedBalance.push([
-					_evtime ,
-					_prevStakedBalance + Number(L[i].data)/10**decEARN * (L[i].topics[0]==EST) ? 1 : -1
-				])
+			if(L[i].topics[0]==EST) {
+				let _depamt = Number(L[i].data)/10**DECIMAL
+				STATE.farmhist.deposits.push( [ _evtime , _depamt ] ) ;
+				_stkbal += _depamt;
+				STATE.farmhist.stakedBalance.push( [ _evtime , _stkbal ] ) ;
+			}
+			if(L[i].topics[0]==EWD) {
+				let _wdamt = -1 * Number(L[i].data)/10**DECIMAL
+				STATE.farmhist.withdrawals.push( [ _evtime , _wdamt ] ) ;
+				_stkbal += _wdamt;
+				STATE.farmhist.stakedBalance.push( [ _evtime , _stkbal ] ) ;
 			}
 			if(L[i].topics[0]==EGR) {
-				let _newclaim = Number(Number(L[i].data)/10**decEARN);
-				STATE.farmhist.claims.push( [ _evtime , _newclaim ] ) ;
-
-				let _prevTotalClaim = (STATE.farmhist.totalClaimed.length == 0) ? 0 : Number(STATE.farmhist.totalClaimed[STATE.farmhist.totalClaimed.length-1]);
-				STATE.farmhist.totalClaimed.push( [ _evtime , _newclaim + _prevTotalClaim ] ) ;
+				let _clamt = Number(Number(L[i].data)/10**decEARN);
+				STATE.farmhist.claims.push( [ _evtime , _clamt ] ) ;
+				_totcl += _clamt;
+				STATE.farmhist.totalClaimed.push( [ _evtime , _totcl ] ) ;
 			}
 		}
 		try{ecp_farmhist()}
@@ -1754,28 +1761,28 @@ function ecp_farmhist() {
   		],
   		yAxis: [
     		{
-      		type: 'value',
-      		name: 'LP Deposits\n & Withdrawals',
-      		position: 'left',
-      		alignTicks: true,
-      		axisLine: {
-        		show: true,
-      		},
-      		axisLabel: {
-        		formatter: '{value} ' + STAKE_NAME
-      		}
+      			type: 'value',
+      			name: STAKED_NAME,
+      			position: 'left',
+      			alignTicks: true,
+      			axisLine: {
+        			show: true,
+      			},
+      			axisLabel: {
+        			formatter: '{value} '
+      			}
     		},
     		{
-      		type: 'value',
-      		name: 'Claims',
-      		position: 'right',
-      		alignTicks: true,
-      		axisLine: {
-        		show: true,
-      		},
-      		axisLabel: {
-        		formatter: '{value} ' + TEARNED[0]
-      		}
+      			type: 'value',
+      			name: TEARNED[0],
+      			position: 'right',
+      			alignTicks: true,
+      			axisLine: {
+        			show: true,
+      			},
+      			axisLabel: {
+        			formatter: '{value} '
+      			}
     		}
   		],
   		series: [
