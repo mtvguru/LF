@@ -548,6 +548,9 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 	</div>
 	<br><br>
 
+	<div id="ec-farmhist" style="min-width: 80%;min-height:500px;background:#fffa"></div>
+
+
 </div>
 
 
@@ -630,6 +633,7 @@ Anyone can request a farm for free. MTV.guru merely provides a platform to host 
 	</div>
 
 <script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <script>
 GENESIS = 9892919;
 TIME_B0	= 1627724429;
@@ -645,8 +649,9 @@ EXPLORE = "https://mtvscout.com/address/";
 EXPLORT = "https://mtvscout.com/tx/";
 tsca = "0xe345A50C33e5c9D0284D6fF0b891c4Fc99a9C117";
 function $(_) {return document.getElementById(_);}
-let provider= {};
-let signer= {};
+let provider = {};
+let signer = {};
+let STATE = {};
 window.addEventListener('load',async function()
 {
 
@@ -1601,6 +1606,10 @@ async function DrefreshFarm()
 		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
 	catch(e){console.log(e);}
+
+	try{paintCharts()}
+	catch(e){console.log(e);}
+
 }
 
 async function guh() {
@@ -1614,6 +1623,28 @@ async function guh() {
 	EST="0x9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d";
 
 	L = await provider.getLogs({address:f_1_add,topics:[[EGR,EWD,EST],"0x000000000000000000000000"+window.ethereum.selectedAddress.substr(2)],toBlock:"latest",fromBlock:GENESIS});
+
+	if(L.length>0) {
+		STATE.farmhist = { claims: [], deposits: [], withdrawls: [], stakedBalance: [], totalClaimed: [] } ;
+		for(i=0; i < L.length; i++) {
+			let _evtime = ((L[i].blockNumber-BLOCK_0)*3 + TIME_B0)*1e3;
+			if(L[i].topics[0]==EWD) { STATE.farmhist.deposits.push(     [ _evtime , Number(L[i].data)/10**DECIMAL ] ) }
+			if(L[i].topics[0]==EST) { STATE.farmhist.withdrawals.push(  [ _evtime , Number(L[i].data)/10**DECIMAL ] ) }
+			if(L[i].topics[0]==EWD || L[i].topics[0]==EWD ) {
+				let _prevStakedBalance = i > 0 ? STATE.farmhist.stakedBalance[i-1] : 0 ;
+				STATE.farmhist.stakedBalance.push([
+					_evtime ,
+					_prevStakedBalance + Number(L[i].data)/10**decEARN * L[i].topics[0]==EWD ? 1 : -1
+				])
+			}
+			if(L[i].topics[0]==EGR) {
+				STATE.farmhist.claims.push( [ _evtime , Number(L[i].data)/10**decEARN ] ) ;
+				let _prevTotalClaim = i > 0 ? STATE.farmhist.totalClaimed[STATE.farmhist.totalClaimed.length-1] : 0 ;
+				STATE.farmhist.totalClaimed.push( [ _evtime , Number(L[i].data)/10**decEARN + _prevTotalClaim ] )
+			}
+		}
+	}
+
 
 	for(i=L.length-1;i>=0;i--) {
 		if(L[i].topics[0]==EGR) {
@@ -1653,6 +1684,9 @@ async function guh() {
 		}
 	}
 
+	try{ecp_farmhist()}
+	catch(e){console.log(e)}
+
 }
 
 aapd=0;
@@ -1691,6 +1725,84 @@ async function notifyRewards() {
 	notice(`<h2>Rewards added!</h2>`);
 
 
+}
+
+function ecp_farmhist() {
+	var myChart = echarts.init(document.getElementById('ec-farmhist'));
+	option = {
+  		tooltip: {
+    		trigger: 'axis',
+    		axisPointer: {
+      		type: 'cross'
+    		}
+  		},
+  		legend: {},
+  		xAxis: [
+    		{
+     		type: 'time',
+    		}
+  		],
+  		yAxis: [
+    		{
+      		type: 'value',
+      		name: 'LP Deposits\n & Withdrawals',
+      		position: 'left',
+      		alignTicks: true,
+      		axisLine: {
+        		show: true,
+      		},
+      		axisLabel: {
+        		formatter: '{value} vaxLP'
+      		}
+    		},
+    		{
+      		type: 'value',
+      		name: 'Claims',
+      		position: 'right',
+      		alignTicks: true,
+      		axisLine: {
+        		show: true,
+      		},
+      		axisLabel: {
+        		formatter: '{value} DIRT'
+      		}
+    		}
+  		],
+  		series: [
+    		{
+      		name: 'Deposits',
+      		type: 'bar',
+      		stack: 'd_w',
+      		data: STATE.farmhist.deposits ,// [ [14, 70], [23, 26], [67, 86], [92, 164], [150,25] ]
+    		},
+    		{
+      		name: 'Withdrawals',
+      		type: 'bar',
+      		stack: 'd_w',
+      		data: STATE.farmhist.withdrawls,//[ [21, -59], [29, -264], [86, -182], [117, -62],[150,-90] ]
+    		},
+    		{
+      		name: 'Staked Balance',
+      		type: 'line',
+      		data: STATE.farmhist.stakedBalance,//[ [1, -59], [19, 264], [28.6, -182], [87, 62],[150,110] ]
+    		},
+    		{
+      		name: 'Claims',
+      		type: 'bar',
+      		yAxisIndex: 1,
+      		data: STATE.farmhist.claims,//[ [20, 12], [50, 51], [100, 61] , [150,200]],
+    		},
+    		{
+      		name: 'Total Claims',
+      		type: 'line',
+      		yAxisIndex: 1,
+      		data: STATE.farmhist.totalClaimed,//[ [20, 12], [50, 63], [100, 124] , [150,324]]
+    		},
+  		]
+
+	};
+
+      myChart.setOption(option);
 }
 
 </script>
