@@ -93,6 +93,7 @@ input{background: #000 !important;}
 html{background-image:url('img/bg-dirt.png');/*:#020611*/;color:#e3e9f2;font-family:helvetica nueve, helvetica, robotica, ubuntu, roboto, sans-serif}
 .mainpanel,.mainstage{background: rgba(15,15,31,0.5);}
 *{text-shadow:6px 6px 5px black;color:#e3e9f2}
+#ec_farmhist{text-shadow:none !important;color:#0fe}
 #switch {display:none;border:none}
 #cw_m{color: #f23;font-weight: bold;text-shadow: 1px 1px 5px rgba(255,127,127,0.5)}
 @font-face{font-family:bold;src: url(https://ftm.guru/font/bold.ttf);}
@@ -168,10 +169,11 @@ td a{text-decoration: 2px underline dotted #f0f}
 }
 
 
-#ec-farmhist {
+#ec_farmhist {
 	border-radius:10px;
+￼    text-shadow: none !important;
 }
-#ec-farmhist * {
+#ec_farmhist * {
 ￼    text-shadow: none !important;
 }
 </style>
@@ -535,6 +537,8 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 	<h3>Past Interactions</h3>
 	<button onclick="guh()">Refresh?</button>
 	<br><br>
+	<div id="ec_farmhist" style="min-width: 80%;min-height:500px;"><br>Historical Chart</div>
+	<br><br>
 	<table>
 		<thead>
 			<tr>
@@ -556,7 +560,6 @@ Utilising their own DIRT token in various ways it's never been a better time to 
 	</div>
 	<br><br>
 
-	<div id="ec-farmhist" style="min-width: 80%;min-height:500px;"></div>
 
 
 </div>
@@ -1744,7 +1747,7 @@ async function notifyRewards() {
 }
 
 function ecp_farmhist() {
-	var myChart = echarts.init(document.getElementById('ec-farmhist'), 'dark');
+	var myChart = echarts.init(document.getElementById('ec_farmhist'), 'dark');
 
 	option = {
   		tooltip: {
