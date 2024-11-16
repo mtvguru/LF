@@ -117,6 +117,54 @@ tbody tr td:nth-child(2){border-radius: 20px;padding: 0 8px;text-shadow:none}
 .elwd td:nth-child(2){background: red;}
 .elst td:nth-child(2){background: #0f0;color:navy;}
 td a{text-decoration: 2px underline dotted #f0f}
+
+
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.7);
+	transition: opacity 500ms;
+	visibility: hidden;
+	opacity: 0;
+	overflow-y:	auto;
+}
+.overlay:target {
+	visibility: visible;
+	opacity: 1;
+}
+
+.popup {
+	margin: 70px auto;
+	padding: 20px;
+	background: #192133;
+	color: #fff;
+	border-radius: 20px;
+	width: 30%;
+	position: relative;
+	transition: all 5s ease-in-out;
+}
+
+.popup .close {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	transition: all 200ms;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #789;
+}
+.popup .close:hover {
+	color: #fff;
+	cursor:	context-menu
+}
+.popup .content {
+	max-height: 30%;
+	overflow: auto;
+}
 </style>
 </head>
 <div class="topbar">
@@ -570,6 +618,16 @@ Anyone can request a farm for free. MTV.guru merely provides a platform to host 
 <hr>
 
 
+	<div id="note" class="overlay">
+		<div class="popup">
+			<a class="close" href="#">&times;</a>
+			<div class="content" id="content1">
+				w31c0m3 fren!<br>trade well :)
+			</div>
+		</div>
+	</div>
+
+
 <script src="https://ftm.guru/ethers-5.2.umd.min.js"></script>
 <script>
 GENESIS = 9892919;
@@ -577,7 +635,8 @@ TIME_B0	= 1627724429;
 BLOCK_0 = 1000000;
 f_1_add = "0x8bAf0F64B088702195D7d877bCD7ddEb1C7239f9";
 pairadd = "0x9029d1dEDa00e166De55406eAB2608E4efC66D7b";
-tearned	= "0x9029d1dEDa00e166De55406eAB2608E4efC66D7b";
+TEARNED	= ["0x9029d1dEDa00e166De55406eAB2608E4efC66D7b"];
+TEARNSYM= ["PROX"];
 RPC_URL = "https://rpc.mtv.ac"
 CHAINID = 62621;
 DECIMAL = 18;
@@ -596,6 +655,11 @@ window.addEventListener('load',async function()
 	setTimeout(async () => { basetrip(); }, 3000);
 }, false);
 
+function notice(c) {
+	window.location = "#note";
+	$("content1").innerHTML = c;
+	console.log(c);
+}
 async function basetrip()
 {
 //if(window.ethereum&&Number(window.ethereum.chainId)==250){web3 = new Web3(web3.currentProvider);if(!(window.ethereum.selectedAddress==null)){cw()}}
