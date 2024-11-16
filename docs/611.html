@@ -408,7 +408,9 @@ td a{text-decoration: 2px underline dotted #f0f}
 				<span></span><span id="farm_3_i_apr">?</span>
 				<span></span><span>A.P.R.</span><span></span>
 				<span></span><span id="farm_3_i_tvl">?</span>
-				<span></span><span>T.V.L.</span><span></span><!--
+				<span></span><span>T.V.L.</span><span></span>
+				<span></span><span id="farm_3_i_dry">?</span>
+				<span></span><span>Dry Date</span><span></span><!--
 				<span></span><span id="farm_3_i_roi"></span>
 				<span></span><span></span><span></span>-->
 			</div>
@@ -461,8 +463,11 @@ The Tellurian, The Celestial, The Machina take on the evil Satoshi Empire.<br><b
 
 <hr class="hhr">
 <div style="overflow:auto" align="center">
-	<div align="center">Dry Date<br><i id="pf">?</i></div>
-	<br><br>
+	<div align="center">
+		Dry Date<br><i id="pf">?</i>
+		<br><br>
+		<button onclick="extendRewards()">Donate Rewards</button>
+	</div>
 	<h2>Farming History</h2>
 	<div style="
 		border: 1px dashed white;
@@ -1514,8 +1519,7 @@ async function refreshFarm()
 		the2.balanceOf(window.ethereum.selectedAddress).then(r => {$("farm_1_s_deposit").innerHTML=Number(r)/1e18});
 		const tv = await the2.balanceOf(f_1_add).then(r => {return(r)});
 
-		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%";//
-		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18).toLocaleString();//
+		await DrefreshFarm()
 
 	}
 	catch(e){console.log(e);}
@@ -1525,13 +1529,27 @@ async function DrefreshFarm()
 	try
 	{
 		theCon = new ethers.Contract(f_1_add, farabi, provider);
+		rd = await Promise.all([
+			theCon.apr(),
+			theCon.tvl(),
+			theCon.periodFinish()
+		])
+		// set apr 0 if dry date passed
+		if(Number(rd[2]) < (Date.now() / 1000)) { rd[0] = 0; }
 
-		$("farm_3_i_apr").innerHTML=(Number(await theCon.apr())/1e18).toLocaleString() +"%"//;
-		$("farm_3_i_tvl").innerHTML="$" + (Number(await theCon.tvl())/1e18).toLocaleString();//
+		$("farm_3_i_apr").innerHTML=(Number( rd[0] )/1e18).toLocaleString() +"%"//;
+		$("farm_3_i_tvl").innerHTML="$" + (Number( rd[1] )/1e18).toLocaleString();//
+		$("farm_3_i_dry").innerHTML= getCountdown(Number(rd[2]) * 1000);//
+		$("pf").innerHTML=new Date(Number(rd[2]) * 1000);//
 
-		theCon.periodFinish().then(r => {$("pf").innerHTML=new Date(Number(r) * 1000)});
 	}
 	catch(e){console.log(e);}
+}
+function getCountdown(_td) {
+	let dn= Date.now();
+	if(dn > _td) { return "Completed"}
+	let df = Math.floor((_td - dn)/1000);
+	return `${(df/(60*60*24)).toFixed()}d${((df%(60*60*24))/(60*60)).toFixed()}h${((df%(60*60))/(60)).toFixed()}m${((df%(60))/(1)).toFixed()}s`
 }
 
 async function guh() {
@@ -1588,5 +1606,40 @@ async function guh() {
 
 aapd=0;
 aapw=0;
+
+async function extendRewards() {
+	notice(`
+		<h2>Extend Rewards</h2>
+		Enter the amount of ${TEARNSYM.join("/")} you want to Donate as rewards to this Farmland. It will also extend the dry date by 30 days!<br><br>
+		<input id="extendRewardsInput" placeholder="Amount">
+		<br><br><button onclick="notifyRewards()">Add</button>
+	`);
+}
+async function notifyRewards() {
+	_amt = $('extendRewardsInput').value;
+	_T = new ethers.Contract(TEARNED[0],ab1,signer);
+	_ab = await Promise.all([
+		_T.balanceOf(window.ethereum.selectedAddress),
+		_T.allowance(window.ethereum.selectedAddress,f_1_add)
+	]);
+
+	if(Number(_ab[0])/1e18 < _amt) { notice(`Insufficient Balance!`); return; }
+
+	if(Number(_ab[1])/1e18 < _amt) {
+		notice(`Insufficient Allowance!<br><br>Please allow the Farmland to spend ${_amt} tokens from your wallet!`);
+		txh = await _T.approve(f_1_add, BigInt(Math.floor(_amt*1e18)) );//ethers.constants.MaxUint256
+		notice(`Approving ${_amt} tokens..`);
+		await txh.wait();
+	}
+
+	_F = new ethers.Contract(f_1_add,farabi,signer);
+	notice(`Approve the transaction in wallet..`);
+	txh = await _F.notifyRewardAmount( BigInt(Math.floor(_amt*1e18)) );
+	notice(`Adding Rewards..`);
+	await txh.wait();
+	notice(`<h2>Rewards added!</h2>`);
+
+
+}
 </script>
 </html>
